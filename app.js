@@ -3,6 +3,7 @@ const session = require('express-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors=require('cors');
 require('dotenv').config();
 
 // Initialize app
@@ -17,8 +18,14 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/anvik', {
 }).catch((error) => {
   console.error('MongoDB connection error:', error);
 });
-
+const corsOptions = {
+  origin: 'http://localhost:5173', // Your React app's URL
+  credentials: true, // This allows session cookies to be sent
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 // Middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
