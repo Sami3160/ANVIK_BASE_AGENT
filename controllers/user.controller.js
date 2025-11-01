@@ -1,10 +1,12 @@
-exports.getProfile = (req, res) => {
-  res.send(`
-    <h1>Welcome ${req.user.displayName}!</h1>
-    <img src="${req.user.photo}" alt="Profile" width="100">
-    <p>Email: ${req.user.email}</p>
-    <a href="/logout">Logout</a>
-  `);
+const User = require("../models/User");
+
+exports.getProfile = async (req, res) => {
+  try {
+    const userData=await User.findById(req.user.id);
+    res.status(200).json(userData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.ask = (req, res) => {
