@@ -10,5 +10,6 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.ask = (req, res) => {
+  const userQuery=req.body.query;
   res.json({ message: 'hello' });
 };
