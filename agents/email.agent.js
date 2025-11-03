@@ -1,22 +1,23 @@
-import { User } from '../models/user.model.js';
-
+// import { User } from '../models/User.js';
+const User = require('../models/User');
 export const getEmails = async (args, userId) => {
   const { filter } = args;
+  return {message:"this email agent is not working right now"};
   
-  if (!userId) return { error: "User ID is missing." };
+//   if (!userId) return { error: "User ID is missing." };
   
-  try {
-    const user = await User.findOne({ userId });
-    if (!user || !user.googleAccessToken) {
-      return { error: "User account not linked." };
-    }
+//   try {
+//     const user = await User.findOne({ userId });
+//     if (!user || !user.accessToken) {
+//       return { error: "User account not linked." };
+//     }
 
-    // MOCK API CALL: Replace with actual Gmail API call
-    console.log(`Fetching emails for user ${userId} with filter: ${filter}`);
+//     // MOCK API CALL: Replace with actual Gmail API call
+//     console.log(`Fetching emails for user ${userId} with filter: ${filter}`);
     
-    return { emails: [ { subject: 'Project Update' }, { subject: 'Security Alert' } ] };
+//     return { emails: [ { subject: 'Project Update' }, { subject: 'Security Alert' } ] };
 
-  } catch (error) {
-    return { error: `Failed to fetch emails: ${error.message}` };
-  }
+//   } catch (error) {
+//     return { error: `Failed to fetch emails: ${error.message}` };
+//   }
 };
