@@ -42,6 +42,7 @@ require('./config/passport')(passport);
 // Routes
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/user', require('./routes/user.routes'));
+app.use('/ai', require('./routes/ai.routes'));
 
 // Home route
 app.get('/', (req, res) => {

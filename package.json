@@ -18,11 +18,14 @@
   },
   "homepage": "https://github.com/Sami3160/ANVIK_BASE_AGENT#readme",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "@google/genai": "^1.28.0",
+    "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
+    "googleapis": "^105.0.0",
     "mongoose": "^8.19.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0"
