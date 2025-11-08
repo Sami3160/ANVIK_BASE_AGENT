@@ -1,4 +1,4 @@
-import { User } from '../models/User';
+import { User } from '../models/User.js';
 // const User = require('../models/User.js');
 import { google } from 'googleapis'; // You'll need googleapis
 import { oauth2 } from 'googleapis/build/src/apis/oauth2/index.js';

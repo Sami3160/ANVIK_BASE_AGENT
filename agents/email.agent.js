@@ -1,6 +1,5 @@
-// import { User } from '../models/User.js';
-const User = require('../models/User');
-export const getEmails = async (args, userId) => {
+import { User } from '../models/User.js';
+// import { User } from "../models/User.js"export const getEmails = async (args, userId) => {
   const { filter } = args;
   return {message:"this email agent is not working right now"};
   
