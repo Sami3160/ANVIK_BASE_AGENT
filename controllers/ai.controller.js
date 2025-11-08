@@ -1,7 +1,7 @@
 import { orchestratorModel } from '../services/ai.service.js';
 
 export const handleChatRequest = async (req, res) => {
-    const { prompt, userId } = req.body;
+  const { prompt, userId } = req.body;
 
   const chat = orchestratorModel.startChat();
   

@@ -4,8 +4,10 @@
   "description": "The abse agent which will manage all other sub agents",
   "main": "index.js",
   "scripts": {
+    "start": "npx nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Sami3160/ANVIK_BASE_AGENT.git"

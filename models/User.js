@@ -1,5 +1,6 @@
 // models/User.js
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import {mongoose} from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   googleId: String,
@@ -11,4 +12,7 @@ const userSchema = new mongoose.Schema({
   expiresAt: Date
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', userSchema, 'users'); // 'users' is the collection name
+const User = mongoose.model('User', userSchema, 'users'); // 'users' is the collection name
+
+
+export {User};
