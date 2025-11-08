@@ -1,6 +1,5 @@
 // services/auth.service.js
-const User = require('../models/User');
-
+import { User } from "../models/User.js"
 class AuthService {
   static async findOrCreateUser(profile, tokens) {
     let user = await User.findOne({ googleId: profile.id });
@@ -26,4 +25,4 @@ class AuthService {
   }
 }
 
-module.exports = AuthService;
+export {AuthService};
