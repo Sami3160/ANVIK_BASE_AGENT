@@ -1,10 +1,19 @@
-const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
-const mongoose = require('mongoose');
-const path = require('path');
-const cors=require('cors');
-require('dotenv').config();
+import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
+import mongoose from 'mongoose';
+import path from 'path';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import passportCallback from './config/passport.js';
+import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
+import aiRoutes from './routes/ai.routes.js';
+
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { User } from './models/User.js';
+import {AuthService} from  './services/auth.service.js';
+dotenv.config();
 
 // Initialize app
 const app = express();
@@ -37,12 +46,47 @@ app.use(session({
 // Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport')(passport);
+// passportCallback(passport);
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.GOOGLE_CALLBACK_URL,
+  passReqToCallback: true
+},
+  async (req, accessToken, refreshToken, profile, done) => {
+    try {
+      const user = await AuthService.findOrCreateUser(profile, {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        expires_in: 3600
+      });
+      return done(null, user);
+    } catch (error) {
+      console.log(error);
+      return done(error, null);
+    }
+  }
+));
 
-// Routes
-app.use('/auth', require('./routes/auth.routes'));
-app.use('/user', require('./routes/user.routes'));
-app.use('/ai', require('./routes/ai.routes'));
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    // console.log(user);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
+
+
+
+app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
+app.use('/ai', aiRoutes);
 
 // Home route
 app.get('/', (req, res) => {

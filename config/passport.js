@@ -1,9 +1,12 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const passport = require('passport');
+import passport from 'passport';
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../models/User.js';
 import {AuthService} from  '../services/auth.service.js';
 
-export default function(passport) {
+export default function passportCallback(passport) {
   passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -19,6 +22,7 @@ export default function(passport) {
         });
         return done(null, user);
       } catch (error) {
+        console.log(error);
         return done(error, null);
       }
     }
@@ -31,6 +35,7 @@ export default function(passport) {
   passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id);
+      // console.log(user);
       done(null, user);
     } catch (error) {
       done(error, null);
