@@ -1,4 +1,4 @@
-exports.isAuthenticated = (req, res, next) => {
+export const isAuthenticated = (req, res, next) => {
   // Check if the user is authenticated
   const isAuthenticated = req.isAuthenticated();
   console.log('isAuthenticated: ', isAuthenticated); // Add this line for debugging

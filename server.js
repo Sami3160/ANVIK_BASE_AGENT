@@ -9,9 +9,12 @@ import passportCallback from './config/passport.js';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import aiRoutes from './routes/ai.routes.js';
-
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from './models/User.js';
+import PassportGoogle from 'passport-google-oauth20';
+const GoogleStrategy = PassportGoogle.Strategy;
+
+// Now you can use GoogleStrategy as you intended:
+// passport.use(new GoogleStrategy(...));import { User } from './models/User.js';
 import {AuthService} from  './services/auth.service.js';
 dotenv.config();
 
