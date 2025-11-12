@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import aiRoutes from './routes/ai.routes.js';
 import { User } from './models/User.js';
+import MongoStore from 'connect-mongo';
 import PassportGoogle from 'passport-google-oauth20';
 const GoogleStrategy = PassportGoogle.Strategy;
 
@@ -45,10 +46,25 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+const sessionnStore=MongoStore.create({
+  mongoUrl:process.env.MONGO_URI || 'mongodb://localhost:27017/anvik',
+  collectionName:'sessions'
+})
 
 // Initialize Passport
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session({
+  secret:process.env.SESSION_SECRET,
+  resave:false,
+  saveUninitialized:false,
+  store:sessionnStore,
+  cookie:{
+    maxAge:1000*60*60*24,
+    secure:false,
+    httpOnly:true,
+    // sameSite:'lax'
+  }
+}));
 // passportCallback(passport);
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,

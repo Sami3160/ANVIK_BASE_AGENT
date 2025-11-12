@@ -2,6 +2,9 @@ import { orchestratorModel } from '../services/ai.service.js';
 
 export const handleChatRequest = async (req, res) => {
   const { prompt, userId } = req.body;
+  try {
+    
+ 
 
   const chat = orchestratorModel.startChat();
   
@@ -51,9 +54,22 @@ export const handleChatRequest = async (req, res) => {
     // Update 'response' with the model's *new* response
     // The loop will check this new response for more function calls
     response = nextResult.response;
+    
+  }
+   } catch (error) {
+    console.error("Error in function call loop:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 
   // If no function call was needed (or the loop finished)
   // return the final text response.
   res.status(200).json({ response: response.text() });
 };
+
+// export const startSession = async (req, res) => {
+//   const { userId } = req.body;
+
+//   const chat = orchestratorModel.startChat();
+
+//   res.status(200).json({ chatId: chat.chatId });
+// };
