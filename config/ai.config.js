@@ -18,103 +18,109 @@ export const agentTools = [
         parameters: {
           type: Type.OBJECT,
           properties: {
-            date: { type: "STRING", description: "The date (YYYY-MM-DD)" },
-            userId: { type: "STRING", description: "The user ID" },
+            minTime: { 
+              type: "STRING", 
+              description: "The start date/time (YYYY-MM-DD or ISO 8601). e.g., '2025-11-20'" 
+            },
+            maxTime: { 
+              type: "STRING", 
+              description: "The end date/time (YYYY-MM-DD or ISO 8601). e.g., '2025-11-21'" 
+            },
           },
-          required: ["date", "userId"],
+          required: ["minTime", "maxTime"],
         },
       },
-      {
-        name: "setCalendarEvent",
-        description: "Set a calendar event. All times must include a timezone.",
-        parameters: {
-          type: "OBJECT",
-          properties: {
-            summary: {
-              type: "STRING",
-              description: "The title or summary of the event."
-            },
-            start: {
-              type: "OBJECT",
-              description: "The start time, including date and timezone.",
-              properties: {
-                dateTime: {
-                  type: "STRING",
-                  description: "ISO 8601 format, e.g., '2025-11-20T09:00:00-07:00'"
-                },
-                timeZone: {
-                  type: "STRING",
-                  description: "The timezone, e.g., 'America/Los_Angeles' or 'Asia/Kolkata'"
-                },
-              },
-              required: ["dateTime", "timeZone"],
-            },
-            end: {
-              type: "OBJECT",
-              description: "The end time, including date and timezone.",
-              properties: {
-                dateTime: {
-                  type: "STRING",
-                  description: "ISO 8601 format, e.g., '2025-11-20T10:00:00-07:00'"
-                },
-                timeZone: {
-                  type: "STRING",
-                  description: "The timezone, e.g., 'America/Los_Angeles' or 'Asia/Kolkata'"
-                },
-              },
-              required: ["dateTime", "timeZone"],
-            },
-            location: {
-              type: "STRING",
-              description: "The location of the event (e.g., '800 Howard St., SF')."
-            },
-            description: {
-              type: "STRING",
-              description: "A detailed description of the event."
-            },
-            attendees: {
-              type: "ARRAY",
-              description: "A list of attendee email addresses.",
-              items: { type: "STRING" }
-            },
-            recurrence: {
-              type: "ARRAY",
-              description: "Recurrence rules, e.g., ['RRULE:FREQ=DAILY;COUNT=2']",
-              items: { type: "STRING" }
-            }
-          },
-          required: ["summary", "start", "end"],
-        },
-      }, {
-        name: "setBirthdayEvent",
-        description: "Creates an all-day, annually recurring birthday event in the user's Google Calendar.",
-        parameters: {
-          type: "OBJECT",
-          properties: {
-            personName: {
-              type: "STRING",
-              description: "The name of the person whose birthday it is (e.g., 'Jane Doe')."
-            },
-            date: {
-              type: "STRING",
-              description: "The person's date of birth in YYYY-MM-DD format (e.g., '1990-05-15')."
-            },
-          },
-          required: ["personName", "date"],
-        },
-      },
-      {
-        name: "getEmails",
-        description: "Get a list of emails based on a filter.",
-        parameters: {
-          type: Type.OBJECT,
-          properties: {
-            filter: { type: "STRING", description: "e.g., 'unread', 'from:boss'" },
-            userId: { type: "STRING", description: "The user ID" },
-          },
-          required: ["filter", "userId"],
-        },
-      },
+      // {
+      //   name: "setCalendarEvent",
+      //   description: "Set a calendar event. All times must include a timezone.",
+      //   parameters: {
+      //     type: "OBJECT",
+      //     properties: {
+      //       summary: {
+      //         type: "STRING",
+      //         description: "The title or summary of the event."
+      //       },
+      //       start: {
+      //         type: "OBJECT",
+      //         description: "The start time, including date and timezone.",
+      //         properties: {
+      //           dateTime: {
+      //             type: "STRING",
+      //             description: "ISO 8601 format, e.g., '2025-11-20T09:00:00-07:00'"
+      //           },
+      //           timeZone: {
+      //             type: "STRING",
+      //             description: "The timezone, e.g., 'America/Los_Angeles' or 'Asia/Kolkata'"
+      //           },
+      //         },
+      //         required: ["dateTime", "timeZone"],
+      //       },
+      //       end: {
+      //         type: "OBJECT",
+      //         description: "The end time, including date and timezone.",
+      //         properties: {
+      //           dateTime: {
+      //             type: "STRING",
+      //             description: "ISO 8601 format, e.g., '2025-11-20T10:00:00-07:00'"
+      //           },
+      //           timeZone: {
+      //             type: "STRING",
+      //             description: "The timezone, e.g., 'America/Los_Angeles' or 'Asia/Kolkata'"
+      //           },
+      //         },
+      //         required: ["dateTime", "timeZone"],
+      //       },
+      //       location: {
+      //         type: "STRING",
+      //         description: "The location of the event (e.g., '800 Howard St., SF')."
+      //       },
+      //       description: {
+      //         type: "STRING",
+      //         description: "A detailed description of the event."
+      //       },
+      //       attendees: {
+      //         type: "ARRAY",
+      //         description: "A list of attendee email addresses.",
+      //         items: { type: "STRING" }
+      //       },
+      //       recurrence: {
+      //         type: "ARRAY",
+      //         description: "Recurrence rules, e.g., ['RRULE:FREQ=DAILY;COUNT=2']",
+      //         items: { type: "STRING" }
+      //       }
+      //     },
+      //     required: ["summary", "start", "end"],
+      //   },
+      // }, {
+      //   name: "setBirthdayEvent",
+      //   description: "Creates an all-day, annually recurring birthday event in the user's Google Calendar.",
+      //   parameters: {
+      //     type: "OBJECT",
+      //     properties: {
+      //       personName: {
+      //         type: "STRING",
+      //         description: "The name of the person whose birthday it is (e.g., 'Jane Doe')."
+      //       },
+      //       date: {
+      //         type: "STRING",
+      //         description: "The person's date of birth in YYYY-MM-DD format (e.g., '1990-05-15')."
+      //       },
+      //     },
+      //     required: ["personName", "date"],
+      //   },
+      // },
+      // {
+      //   name: "getEmails",
+      //   description: "Get a list of emails based on a filter.",
+      //   parameters: {
+      //     type: Type.OBJECT,
+      //     properties: {
+      //       filter: { type: "STRING", description: "e.g., 'unread', 'from:boss'" },
+      //       userId: { type: "STRING", description: "The user ID" },
+      //     },
+      //     required: ["filter", "userId"],
+      //   },
+      // },
       // {
       //   name: 'scheduleMeeting',
       //   description: 'Schedules a meeting with specified attendees at a given time and date.',
@@ -174,8 +180,9 @@ export const agentConfig = {
 
 export const agentFunctions = {
   getCalendarEvents,
-  // setCalendarEvents,
-  getEmails,
+  // setCalendarEvent,
+  // setBirthdayEvent,
+  // getEmails,
   // ... all your other functions
 };
 

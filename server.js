@@ -16,7 +16,7 @@ const GoogleStrategy = PassportGoogle.Strategy;
 
 // Now you can use GoogleStrategy as you intended:
 // passport.use(new GoogleStrategy(...));import { User } from './models/User.js';
-import {AuthService} from  './services/auth.service.js';
+import { AuthService } from './services/auth.service.js';
 dotenv.config();
 
 // Initialize app
@@ -41,30 +41,31 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'car',
-  resave: false,
-  saveUninitialized: true
-}));
-const sessionnStore=MongoStore.create({
-  mongoUrl:process.env.MONGO_URI || 'mongodb://localhost:27017/anvik',
-  collectionName:'sessions'
-})
+// app.use(session({
+//   secret: process.env.SESSION_SECRET || 'car',
+//   resave: false,
+//   saveUninitialized: true
+// }));
+// const sessionnStore=
 
 // Initialize Passport
-app.use(passport.initialize());
-app.use(passport.session({
-  secret:process.env.SESSION_SECRET,
-  resave:false,
-  saveUninitialized:false,
-  store:sessionnStore,
-  cookie:{
-    maxAge:1000*60*60*24,
-    secure:false,
-    httpOnly:true,
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/anvik',
+    collectionName: 'sessions'
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: false,
+    httpOnly: true,
     // sameSite:'lax'
   }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 // passportCallback(passport);
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,

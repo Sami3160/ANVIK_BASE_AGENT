@@ -8,6 +8,9 @@ import { oauth2Client } from '../config/ai.config.js';
 //   'https://www.googleapis.com/auth/gmail.readonly'
 // ];
 const getCalendarEvents = async (args, userId) => {
+  console.log("calender event triggered")
+  console.log("args", args);
+  console.log("userId", userId);
   try {
     // 1. Find user by your app's internal _id
     const user = await User.findById(userId); 
