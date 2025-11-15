@@ -69,7 +69,7 @@ const getCalendarEvents = async (args, userId) => {
       summary: event.summary,
       start: event.start?.dateTime || event.start?.date,
     }));
-    
+    console.log("following events, ", simplifiedEvents);
     return { events: simplifiedEvents };
 
   } catch (error) {
